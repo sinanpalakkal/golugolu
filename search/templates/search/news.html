@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ query }} - Golugolu News</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #fff;
+            color: #202124;
+        }
+
+        /* HEADER */
+
+        .header {
+            padding: 25px 5%;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: bold;
+            color: #4285f4;
+            text-decoration: none;
+        }
+
+        .search-box {
+            margin-top: 20px;
+            max-width: 650px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px 22px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            box-shadow: 0 1px 6px rgba(32, 33, 36, .2);
+        }
+
+
+        /* NAVIGATION */
+
+        .tabs {
+            display: flex;
+            gap: 28px;
+            padding: 18px 5%;
+            border-bottom: 1px solid #eee;
+            overflow-x: auto;
+        }
+
+        .tabs a {
+            text-decoration: none;
+            color: #777;
+            white-space: nowrap;
+            padding-bottom: 8px;
+            font-size: 16px;
+        }
+
+        /* ACTIVE TAB - BLACK */
+
+        .tabs a.active {
+            color: #202124;
+            border-bottom: 3px solid #202124;
+            font-weight: bold;
+        }
+
+
+        /* MAIN CONTENT */
+
+        .container {
+            max-width: 1100px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .heading {
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+
+        /* NEWS CARDS */
+
+        .news-card {
+            display: flex;
+            gap: 20px;
+            padding: 22px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .news-image {
+            min-width: 150px;
+            width: 150px;
+            height: 115px;
+            background: #f1f3f4;
+            border-radius: 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 40px;
+        }
+
+        .news-info {
+            flex: 1;
+        }
+
+        .news-info h3 {
+            font-size: 18px;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        .news-info p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .news-meta {
+            color: #888;
+            font-size: 12px;
+        }
+
+        .news-label {
+            display: inline-block;
+            padding: 5px 10px;
+            background: #e8f0fe;
+            color: #1967d2;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+
+        /* EMPTY MESSAGE */
+
+        .empty-message {
+            text-align: center;
+            padding: 60px 20px;
+            color: #777;
+            background: #fafafa;
+            border-radius: 12px;
+        }
+
+        .empty-message .icon {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-top: 1px solid #eee;
+            color: #888;
+            font-size: 13px;
+        }
+
+
+        /* MOBILE RESPONSIVE */
+
+        @media (max-width: 550px) {
+
+            .news-card {
+                gap: 12px;
+            }
+
+            .news-image {
+                min-width: 95px;
+                width: 95px;
+                height: 90px;
+                font-size: 30px;
+            }
+
+            .news-info h3 {
+                font-size: 15px;
+            }
+
+            .news-info p {
+                font-size: 12px;
+            }
+
+            .tabs {
+                gap: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <a href="{% url 'home' %}" class="logo">
+            Golugolu
+        </a>
+
+        <form action="{% url 'results' %}" method="GET" class="search-box">
+
+            <input
+                type="text"
+                name="q"
+                value="{{ query }}"
+                placeholder="Search anything..."
+            >
+
+        </form>
+
+    </header>
+
+
+
+    <!-- SEARCH NAVIGATION -->
+
+    <nav class="tabs">
+
+        <a href="{% url 'ai_mode' %}?q={{ query|urlencode }}">
+            ✦ AI Mode
+        </a>
+
+        <a href="{% url 'results' %}?q={{ query|urlencode }}">
+            All
+        </a>
+
+        <a href="{% url 'images' %}?q={{ query|urlencode }}">
+            Images
+        </a>
+
+        <a href="{% url 'videos' %}?q={{ query|urlencode }}">
+            Videos
+        </a>
+
+        <a href="{% url 'shopping' %}?q={{ query|urlencode }}">
+            Shopping
+        </a>
+
+        <!-- ACTIVE NEWS TAB -->
+
+        <a href="{% url 'news' %}?q={{ query|urlencode }}" class="active">
+            News
+        </a>
+
+    </nav>
+
+
+
+    <!-- NEWS CONTENT -->
+
+    <main class="container">
+
+        <h2 class="heading">
+            News
+        </h2>
+
+        <p class="subtitle">
+            Latest news related to "{{ query }}"
+        </p>
+
+
+        {% if news_error %}
+
+            <div class="empty-message">
+
+                <div class="icon">⚠️</div>
+
+                <h3>Unable to load news</h3>
+
+                <p>
+                    {{ news_error }}
+                </p>
+
+            </div>
+
+
+        {% elif news_results %}
+
+            {% for article in news_results %}
+
+                <div class="news-card">
+
+                    <div class="news-image">
+                        📰
+                    </div>
+
+                    <div class="news-info">
+
+                        <span class="news-label">
+                            NEWS
+                        </span>
+
+                        <h3>
+                            {{ article.title }}
+                        </h3>
+
+                        <p>
+                            {{ article.description }}
+                        </p>
+
+                        <div class="news-meta">
+
+                            {{ article.source }}
+
+                            &nbsp; • &nbsp;
+
+                            {{ article.published_at }}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+
+        {% else %}
+
+            <div class="empty-message">
+
+                <div class="icon">📰</div>
+
+                <h3>No news found yet!</h3>
+
+                <p>
+                    Golugolu is searching for news about "{{ query }}".
+                </p>
+
+                <p style="margin-top: 10px;">
+                    Our news reporters are probably having tea. 😂
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </main>
+
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        © 2026 Golugolu Search. Search less. Get confused more.
+
+    </footer>
+
+
+</body>
+
+</html>

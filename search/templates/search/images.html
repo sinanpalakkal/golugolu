@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ query }} - Golugolu Images</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: #202124;
+            background: #fff;
+        }
+
+        /* HEADER */
+
+        .header {
+            padding: 20px 5% 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .top-header {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 580px;
+            height: 48px;
+            border: 1px solid #dfe1e5;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            padding: 0 18px;
+            box-shadow: 0 1px 5px #ddd;
+        }
+
+        .search-box input {
+            flex: 1;
+            min-width: 0;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .search-box button {
+            border: none;
+            background: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* NAVIGATION */
+
+        .tabs {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            margin-top: 30px;
+            scrollbar-width: none;
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tabs a {
+            text-decoration: none;
+            color: #70757a;
+            font-size: 15px;
+            white-space: nowrap;
+            padding-bottom: 12px;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tabs a:hover {
+            color: #1a73e8;
+        }
+
+        .tabs .active {
+            color: #202124;
+            font-weight: bold;
+            border-bottom: 3px solid #202124;
+        }
+
+        /* MAIN CONTENT */
+
+        .main {
+            padding: 30px 5%;
+        }
+
+        .heading {
+            font-size: 23px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #70757a;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .image-count {
+            font-size: 13px;
+            color: #70757a;
+            margin-bottom: 20px;
+        }
+
+        /* IMAGE GALLERY */
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .image-card {
+            overflow: hidden;
+            border-radius: 12px;
+            background: #f8f9fa;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .image-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 3px 12px #ddd;
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+            display: block;
+            background: #eee;
+        }
+
+        .image-info {
+            padding: 12px;
+        }
+
+        .image-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+
+        .image-creator {
+            font-size: 12px;
+            color: #70757a;
+        }
+
+        .image-license {
+            font-size: 11px;
+            color: #188038;
+            margin-top: 6px;
+        }
+
+        /* MESSAGE */
+
+        .message {
+            padding: 45px 15px;
+            text-align: center;
+            color: #70757a;
+            line-height: 1.8;
+        }
+
+        .message h3 {
+            color: #202124;
+            margin-bottom: 10px;
+        }
+
+        /* IMAGE PREVIEW */
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            inset: 0;
+            background: rgba(0,0,0,0.88);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            text-align: center;
+            color: white;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .modal-title {
+            margin-top: 15px;
+            font-size: 16px;
+        }
+
+        .modal-source {
+            display: inline-block;
+            margin-top: 12px;
+            color: #8ab4f8;
+            text-decoration: none;
+        }
+
+        .modal-source:hover {
+            text-decoration: underline;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 35px;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #f2f2f2;
+            padding: 20px;
+            text-align: center;
+            color: #70757a;
+            font-size: 13px;
+            margin-top: 50px;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width: 900px) {
+
+            .image-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+        }
+
+        @media(max-width: 600px) {
+
+            .header {
+                padding: 20px 18px 0;
+            }
+
+            .top-header {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .logo {
+                font-size: 29px;
+            }
+
+            .search-box {
+                max-width: 100%;
+            }
+
+            .tabs {
+                gap: 25px;
+            }
+
+            .tabs a {
+                font-size: 14px;
+            }
+
+            .main {
+                padding: 25px 15px;
+            }
+
+            .image-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .image-card img {
+                height: 160px;
+            }
+
+        }
+
+        @media(max-width: 350px) {
+
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header class="header">
+
+    <div class="top-header">
+
+        <a href="{% url 'home' %}" class="logo">
+            <span style="color:#4285F4;">G</span><span style="color:#EA4335;">o</span><span style="color:#FBBC05;">l</span><span style="color:#4285F4;">u</span><span style="color:#34A853;">g</span><span style="color:#4285F4;">o</span><span style="color:#34A853;">l</span><span style="color:#EA4335;">u</span>
+        </a>
+
+        <form action="{% url 'results' %}" method="GET" class="search-box">
+
+            <input
+                type="text"
+                name="q"
+                value="{{ query }}"
+                placeholder="Search for images..."
+                required
+            >
+
+            <button type="submit">🔍</button>
+
+        </form>
+
+    </div>
+
+    <!-- NAVIGATION -->
+
+    <div class="tabs">
+
+        <a href="{% url 'ai_mode' %}?q={{ query|urlencode }}">
+            ✦ AI Mode
+        </a>
+
+        <a href="{% url 'results' %}?q={{ query|urlencode }}">
+            All
+        </a>
+
+        <a href="{% url 'images' %}?q={{ query|urlencode }}" class="active">
+            Images
+        </a>
+
+        <a href="{% url 'videos' %}?q={{ query|urlencode }}">
+            Videos
+        </a>
+
+        <a href="{% url 'shopping' %}?q={{ query|urlencode }}">
+            Shopping
+        </a>
+        
+        <a href="{% url 'news' %}?q={{ query|urlencode }}">
+    News
+</a>
+
+    </div>
+
+</header>
+
+
+<!-- MAIN CONTENT -->
+
+<main class="main">
+
+    <h2 class="heading">
+        Images for "{{ query }}"
+    </h2>
+
+    <p class="subtitle">
+        Discover images from across the internet.
+    </p>
+
+
+    {% if image_error %}
+
+        <div class="message">
+
+            <h3>Oops! Something went wrong 😅</h3>
+
+            {{ image_error }}
+
+        </div>
+
+
+    {% elif image_results %}
+
+        <p class="image-count">
+            Found {{ image_results|length }} images
+        </p>
+
+
+        <div class="image-grid">
+
+            {% for item in image_results %}
+
+                <div class="image-card"
+                     onclick="openPreview(this)"
+                     data-image="{{ item.original_url }}"
+                     data-title="{{ item.title|escape }}"
+                     data-source="{{ item.source_url }}">
+
+                    <img
+                        src="{{ item.image_url }}"
+                        alt="{{ item.title }}"
+                        loading="lazy"
+                    >
+
+                    <div class="image-info">
+
+                        <p class="image-title">
+                            {{ item.title|truncatechars:55 }}
+                        </p>
+
+                        <p class="image-creator">
+                            By {{ item.creator|default:"Unknown Creator" }}
+                        </p>
+
+                        <p class="image-license">
+                            License: {{ item.license|upper }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+
+    {% elif query %}
+
+        <div class="message">
+
+            <h3>No images found! 😢</h3>
+
+            Try searching with another keyword.
+
+        </div>
+
+
+    {% else %}
+
+        <div class="message">
+
+            <h3>Welcome to Golugolu Images! 🖼️</h3>
+
+            Search for anything to discover images.
+
+        </div>
+
+    {% endif %}
+
+</main>
+
+
+<!-- IMAGE PREVIEW MODAL -->
+
+<div class="modal" id="imageModal" onclick="closePreview(event)">
+
+    <span class="close" onclick="closePreview(event)">×</span>
+
+    <div class="modal-content">
+
+        <img id="previewImage" src="" alt="Image preview">
+
+        <p class="modal-title" id="previewTitle"></p>
+
+        <a
+            id="previewSource"
+            class="modal-source"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            View Original Source ↗
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    © 2026 Golugolu Search
+
+</footer>
+
+
+<!-- JAVASCRIPT -->
+
+<script>
+
+    function openPreview(card) {
+
+        const image = card.dataset.image;
+        const title = card.dataset.title;
+        const source = card.dataset.source;
+
+        document.getElementById("previewImage").src = image;
+
+        document.getElementById("previewTitle").textContent = title;
+
+        const sourceLink = document.getElementById("previewSource");
+
+        if (source) {
+
+            sourceLink.href = source;
+            sourceLink.style.display = "inline-block";
+
+        } else {
+
+            sourceLink.style.display = "none";
+
+        }
+
+        document.getElementById("imageModal").style.display = "flex";
+
+    }
+
+
+    function closePreview(event) {
+
+        if (
+            event.target.id === "imageModal" ||
+            event.target.classList.contains("close")
+        ) {
+
+            document.getElementById("imageModal").style.display = "none";
+
+            document.getElementById("previewImage").src = "";
+
+        }
+
+    }
+
+
+    document.addEventListener("keydown", function(event) {
+
+        if (event.key === "Escape") {
+
+            document.getElementById("imageModal").style.display = "none";
+
+            document.getElementById("previewImage").src = "";
+
+        }
+
+    });
+
+</script>
+
+</body>
+</html>

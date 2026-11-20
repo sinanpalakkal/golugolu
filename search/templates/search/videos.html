@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ query }} - Golugolu Videos</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #fff;
+            color: #202124;
+        }
+
+        .header {
+            padding: 25px 5%;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: bold;
+            color: #4285f4;
+            text-decoration: none;
+        }
+
+        .search-box {
+            margin-top: 20px;
+            max-width: 650px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px 22px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            box-shadow: 0 1px 6px rgba(32, 33, 36, .2);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 28px;
+            padding: 18px 5%;
+            border-bottom: 1px solid #eee;
+            overflow-x: auto;
+        }
+
+        .tabs a {
+            text-decoration: none;
+            color: #555;
+            white-space: nowrap;
+            padding-bottom: 8px;
+        }
+
+    .tabs a.active 
+      {
+    color: #000;
+    border-bottom: 3px solid #000;
+    font-weight: bold;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .heading {
+            font-size: 23px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .video-card {
+            border: 1px solid #eee;
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            transition: .2s;
+        }
+
+        .video-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, .08);
+        }
+
+        .thumbnail {
+            height: 170px;
+            background: #f1f3f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 45px;
+        }
+
+        .video-info {
+            padding: 16px;
+        }
+
+        .video-info h3 {
+            font-size: 16px;
+            margin-bottom: 9px;
+        }
+
+        .video-info p {
+            color: #777;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .video-label {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 5px 10px;
+            background: #fce8e6;
+            color: #c5221f;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 60px 20px;
+            color: #777;
+            background: #fafafa;
+            border-radius: 12px;
+        }
+
+        .empty-message .icon {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-top: 1px solid #eee;
+            color: #888;
+            font-size: 13px;
+        }
+
+        @media (max-width: 750px) {
+            .video-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .thumbnail {
+                height: 200px;
+            }
+
+            .tabs {
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+
+        <a href="{% url 'home' %}" class="logo">
+            Golugolu
+        </a>
+
+        <form action="{% url 'results' %}" method="GET" class="search-box">
+            <input
+                type="text"
+                name="q"
+                value="{{ query }}"
+                placeholder="Search anything..."
+            >
+        </form>
+
+    </header>
+
+
+    <!-- SEARCH NAVIGATION -->
+
+    <nav class="tabs">
+
+        <a href="{% url 'ai_mode' %}?q={{ query|urlencode }}">
+            ✦ AI Mode
+        </a>
+
+        <a href="{% url 'results' %}?q={{ query|urlencode }}">
+            All
+        </a>
+
+        <a href="{% url 'images' %}?q={{ query|urlencode }}">
+            Images
+        </a>
+
+        <a href="{% url 'videos' %}?q={{ query|urlencode }}" class="active">
+            Videos
+        </a>
+
+        <a href="{% url 'shopping' %}?q={{ query|urlencode }}">
+            Shopping
+        </a>
+        
+       <a href="{% url 'news' %}?q={{ query|urlencode }}">
+    News
+</a>
+
+    </nav>
+
+
+    <main class="container">
+
+        <h2 class="heading">
+            Videos
+        </h2>
+
+        <p class="subtitle">
+            Video results for "{{ query }}"
+        </p>
+
+
+        {% if video_error %}
+
+            <div class="empty-message">
+                <div class="icon">⚠️</div>
+                <h3>Unable to load videos</h3>
+                <p>{{ video_error }}</p>
+            </div>
+
+        {% elif video_results %}
+
+            <div class="video-grid">
+
+                {% for video in video_results %}
+
+                    <div class="video-card">
+
+                        <div class="thumbnail">
+                            ▶️
+                        </div>
+
+                        <div class="video-info">
+
+                            <h3>{{ video.title }}</h3>
+
+                            <p>{{ video.description }}</p>
+
+                            <span class="video-label">
+                                VIDEO
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-message">
+
+                <div class="icon">🎬</div>
+
+                <h3>No videos found yet!</h3>
+
+                <p>
+                    Golugolu is still searching for videos about
+                    "{{ query }}".
+                </p>
+
+                <p style="margin-top: 10px;">
+                    Our video department is probably sleeping. 😂
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </main>
+
+
+    <footer>
+        © 2026 Golugolu Search. Search less. Get confused more.
+    </footer>
+
+</body>
+</html>

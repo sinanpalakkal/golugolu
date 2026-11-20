@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ site_name }}</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+            color: #202124;
+        }
+
+        header {
+            background: white;
+            padding: 22px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .tagline {
+            color: #777;
+            margin-top: 7px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 35px auto;
+            padding: 20px;
+        }
+
+        .search {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .search input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            font-size: 16px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .card h2 {
+            color: #1a0dab;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #fff3cd;
+            color: #856404;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        /* IMPORTANT NOTICE SECTION */
+
+        .important-notice {
+            background: linear-gradient(135deg, #fff8e1, #fff0c2);
+            border: 1px solid #ffcc66;
+            border-left: 6px solid #ff9800;
+            border-radius: 14px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.10);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .notice-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .notice-icon {
+            width: 42px;
+            height: 42px;
+            background: #ff9800;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .notice-header h2 {
+            color: #9a5700;
+            font-size: 20px;
+        }
+
+        .notice-label {
+            display: inline-block;
+            background: #ffe0a3;
+            color: #8a4b00;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .important-notice p {
+            color: #704500;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        .notice-footer {
+            margin-top: 18px;
+            padding-top: 12px;
+            border-top: 1px dashed #e5b85c;
+            color: #9a6b20;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 20px;
+            color: #4285F4;
+            text-decoration: none;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #888;
+        }
+
+        /* MOBILE RESPONSIVE */
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 18px;
+            }
+
+            .logo {
+                font-size: 25px;
+            }
+
+            .container {
+                margin: 15px auto;
+                padding: 15px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .important-notice {
+                padding: 20px;
+            }
+
+            .notice-header h2 {
+                font-size: 18px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        {{ site_name }}
+    </div>
+
+    <p class="tagline">
+        {{ tagline }}
+    </p>
+
+</header>
+
+
+
+<main class="container">
+
+
+    <!-- SEARCH BAR -->
+
+    <div class="search">
+
+        <form action="{% url 'results' %}" method="GET">
+
+            <input
+                type="text"
+                name="q"
+                value="{{ query }}"
+                placeholder="Search for something useless..."
+            >
+
+        </form>
+
+    </div>
+
+
+
+    <!-- MAIN SEARCH RESULT -->
+
+    <div class="card">
+
+        <span class="badge">
+            VERIFIED BY YOU! 🫵 😂
+        </span>
+
+        <h2>{{ title }}</h2>
+
+        <p>
+            {{ description }}
+        </p>
+
+    </div>
+
+
+
+    <!-- ABOUT SECTION -->
+
+    <div class="card">
+
+        <h2>About {{ query }}</h2>
+
+        <p>
+
+            Welcome to {{ site_name }}.
+
+            We are an internationally unrecognized
+            organization dedicated to researching
+            completely unnecessary information.
+
+            Our mission is to make the internet
+            a more confusing place.
+
+        </p>
+
+    </div>
+
+
+
+    <!-- LATEST RESEARCH -->
+
+    <div class="card">
+
+        <h2>Latest Research</h2>
+
+        {% for article in articles %}
+
+            <p style="margin-bottom: 18px;">
+                🔍 {{ article }}
+            </p>
+
+        {% endfor %}
+
+    </div>
+
+
+
+    <!-- IMPORTANT NOTICE - HIGHLIGHTED SECTION -->
+
+    <div class="important-notice">
+
+        <div class="notice-label">
+            ⚠ OFFICIAL UNIMPORTANT ANNOUNCEMENT
+        </div>
+
+        <div class="notice-header">
+
+            <div class="notice-icon">
+                !
+            </div>
+
+            <h2>Important Notice</h2>
+
+        </div>
+
+        <p>
+
+            🎉 Congratulations!
+
+            You have successfully wasted more time
+            visiting this website.
+
+            Your dedication is appreciated.🔥🫰
+
+        </p>
+
+        <div class="notice-footer">
+
+            ⚠️ IMPORTANT: If you find anything useful here, please report it immediately. That's clearly a technical error.
+
+        </div>
+
+    </div>
+
+
+
+    <!-- BACK TO HOME -->
+
+    <a href="{% url 'home' %}" class="back">
+
+        ← Return to Golugolu Search
+
+    </a>
+
+
+</main>
+
+
+
+<footer>
+
+    © 2026 {{ site_name }}.
+
+    All useless information reserved.
+
+</footer>
+
+
+</body>
+
+</html>

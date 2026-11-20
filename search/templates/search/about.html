@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>About Me - Golugolu</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #fff;
+            color: #202124;
+            min-height: 100vh;
+        }
+
+        /* NAVIGATION */
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 22px 35px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #444;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* MAIN CONTAINER */
+
+        .container {
+            max-width: 750px;
+            margin: 65px auto;
+            padding: 20px;
+        }
+
+        /* HEADING */
+
+        .heading {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .heading h1 {
+            font-size: 38px;
+            margin-bottom: 12px;
+        }
+
+        .heading p {
+            color: #777;
+            font-size: 15px;
+        }
+
+        /* PROFILE CARD */
+
+        .profile-card {
+            background: #f8f9fa;
+            border: 1px solid #e8eaed;
+            border-radius: 18px;
+            padding: 35px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .profile-icon {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: #e8f0fe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            margin: 0 auto 20px;
+        }
+
+        .profile-card h2 {
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        .profile-card .role {
+            color: #4285F4;
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .profile-card p {
+            color: #5f6368;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* ABOUT PROJECT */
+
+        .project-card {
+            padding: 30px;
+            border: 1px solid #e8eaed;
+            border-radius: 18px;
+            margin-bottom: 25px;
+        }
+
+        .project-card h2 {
+            font-size: 21px;
+            margin-bottom: 15px;
+        }
+
+        .project-card p {
+            color: #5f6368;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* TECHNOLOGIES */
+
+        .tech-section {
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 18px;
+            margin-bottom: 25px;
+        }
+
+        .tech-section h2 {
+            font-size: 19px;
+            margin-bottom: 18px;
+        }
+
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tech-list span {
+            background: white;
+            border: 1px solid #dadce0;
+            border-radius: 20px;
+            padding: 9px 15px;
+            font-size: 13px;
+            color: #444;
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+            padding: 22px;
+            background: #f2f2f2;
+            color: #70757a;
+            font-size: 13px;
+            margin-top: 70px;
+        }
+
+        @media(max-width: 600px) {
+
+            nav {
+                padding: 20px;
+            }
+
+            .container {
+                margin-top: 35px;
+            }
+
+            .heading h1 {
+                font-size: 30px;
+            }
+
+            .profile-card {
+                padding: 25px 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+
+    <nav>
+
+        <a href="{% url 'home' %}">← Back to Golugolu</a>
+
+        <a href="{% url 'home' %}">Home</a>
+
+    </nav>
+
+
+    <main class="container">
+
+        <!-- HEADING -->
+
+        <div class="heading">
+
+            <h2>The person behind Golugolu!!</h2>
+
+        </div>
+
+
+        <!-- CREATOR PROFILE -->
+
+        <section class="profile-card">
+
+            <h2>Hey, I'm 6K!</h2>
+
+            <div class="role">
+                Student | Content Creator | Developer
+            </div>
+
+            <p>
+                I'm a BCA student who loves exploring technology,
+                programming and the world of gaming.
+            </p>
+
+            <p>
+                I enjoy experimenting with new ideas,
+                building projects and learning something new every day.
+            </p>
+
+        </section>
+
+
+        <!-- ABOUT GOLOGOLU -->
+
+        <section class="project-card">
+
+            <h2>🚀 Why Golugolu?</h2>
+
+            <p>
+                Golugolu is a fun experimental search engine
+                created as a personal project.
+            </p>
+
+            <br>
+
+            <p>
+                The idea is simple: What if a search engine
+                didn't take searching seriously?
+            </p>
+
+            <br>
+
+            <p>
+                Built using Python and Django, Golugolu combines
+                programming, creativity and a little bit of humour
+                to create an unusual searching experience.
+            </p>
+
+            <br>
+
+            <p>
+                It might not always give you useful answers,
+                but at least it won't let you search in peace! 😂
+            </p>
+
+        </section>
+
+
+        <!-- TECHNOLOGIES -->
+
+        <section class="tech-section">
+
+            <h2>🛠️ Built With</h2>
+
+            <div class="tech-list">
+
+                <span>Python</span>
+
+                <span>Django</span>
+
+                <span>HTML</span>
+
+                <span>CSS</span>
+
+                <span>JavaScript</span>
+
+                <span>Openverse API</span>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        Built with ❤️ by 6K | © 2026 Golugolu
+
+    </footer>
+
+</body>
+
+</html>
